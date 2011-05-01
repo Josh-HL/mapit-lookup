@@ -1,0 +1,18 @@
+MaPit Lookup is a PHP class for looking up data from an instance of
+MySociety's MaPit software.
+
+MaPit Lookup is licensed under the MIT Licence, please see the LICENSE
+file for full details. The MaPit web service contains data from a
+variety of organisations, please see the MaPit website for full details:
+
+http://mapit.mysociety.org/
+
+REQUIREMENTS
+
+* PHP 5.2.0 or later (tested with 5.3.2)
+* Web server which supports PHP (Apache 2.2.x recommended)
+* Zend Framework 1.11 or later
+
+This code should run on any platform which supports PHP and meets the
+above requirements, however it has only been tested on Debian and Ubuntu
+using Apache and mod_php.

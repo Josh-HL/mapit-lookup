@@ -11,9 +11,9 @@ class MaPit
     $this->baseUri = $baseUri;
   }
   
-  public function getPostcode($postcode, $parameters = array())
+  private function request($uri, $parameters = array())
   {
-    $uri = $this->baseUri . '/postcode/' . urlencode($postcode);
+    $uri = $this->baseUri . $uri;
     
     $client = new Zend_Http_Client();
     $client->setUri($uri);
@@ -21,7 +21,23 @@ class MaPit
     
     $response = $client->request();
     
-    $body = $response->getBody();
+    return $response;
+  }
+  
+  public function getPostcode($postcode, $parameters = array())
+  {
+    $uri = '/postcode/' . urlencode($postcode);
+    
+    $body = $this->request($uri, $parameters)->getBody();
+    
+    return json_decode($body, true);
+  }
+  
+  public function getGenerations()
+  {
+    $uri = '/generations';
+    
+    $body = $this->request($uri)->getBody();
     
     return json_decode($body, true);
   }

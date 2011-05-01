@@ -2,18 +2,33 @@
 
 require_once 'Zend/Http/Client.php';
 
+/**
+ * Class for accessing an instance of MaPit, without having to worry
+ * about HTTP requests or JSON decoding.
+ */
 class MaPit
 {
   private $baseUri;
   
+  /**
+   * Create a new instance of the MaPit Lookup class.
+   * 
+   * @param string $baseUri Base URI for MaPit (no trailing slash).
+   */
   public function __construct($baseUri)
   {
     $this->baseUri = $baseUri;
   }
   
-  private function request($uri, $parameters = array())
+  /**
+   * Make a request to a MaPit instance.
+   * 
+   * @param string $path
+   * @param array $parameters
+   */
+  private function request($path, $parameters = array())
   {
-    $uri = $this->baseUri . $uri;
+    $uri = $this->baseUri . $path;
     
     $client = new Zend_Http_Client();
     $client->setUri($uri);
@@ -26,18 +41,18 @@ class MaPit
   
   public function getPostcode($postcode, $parameters = array())
   {
-    $uri = '/postcode/' . urlencode($postcode);
+    $path = '/postcode/' . urlencode($postcode);
     
-    $body = $this->request($uri, $parameters)->getBody();
+    $body = $this->request($path, $parameters)->getBody();
     
     return json_decode($body, true);
   }
   
   public function getGenerations()
   {
-    $uri = '/generations';
+    $path = '/generations';
     
-    $body = $this->request($uri)->getBody();
+    $body = $this->request($path)->getBody();
     
     return json_decode($body, true);
   }
